@@ -8,10 +8,6 @@
 #include <string>
 #include <fstream>
 
-
-
-
-
 using std::cout; using std::cin;
 using std::endl; using std::string;
 using std::filesystem::directory_iterator;
@@ -33,52 +29,79 @@ public:
 
 };
 
+class Business {
+public:
 
-void getOrders(string path) {
+    int numberOrder;
+    Order orders[10];
+
+    Business(int y, Order* newOrders) {
+        
+        numberOrder = y;
+
+        setOrders(newOrders);   
+    }
+
+    int getNumberOrders(){
+
+        return numberOrder;
+    }
+
+    void setOrders (Order * newOrders) {
+
+        for (int i = 0; i < numberOrder; i++) {
+
+            orders[i] = newOrders[i];
+
+        }
+    }
+
+    void printOrders() {
+
+        for (int i = 0; i < numberOrder; i++) {
+
+            cout << orders[i].getName() << "\n";
+        }
+    }
+};
+
+
+Order * getOrders(string path) {
 
     string myText;
     int numOrder = 0;
-    Order orders[10];
-
-
-
-
+    static Order orders[10];
 
     for (const auto& file : directory_iterator(path)) {
-        //cout << file.path() << endl;
         ifstream MyReadFile(file.path());
         getline(MyReadFile, myText);
         
         orders[numOrder] = Order(myText);
         numOrder += 1;
     }
+    
+    return orders; 
+}
 
-    for (int i = 0; i < numOrder; i++) {
+int getNumFiles(string path) {
 
-        cout << orders[i].getName() << "\n";
+    int numOrder = 0;
 
+    for (const auto& file : directory_iterator(path)) {
+      
+        numOrder += 1;
     }
-    
 
-    
-    
+    return numOrder;
 }
 
 int main()
 {
     string path = "orders/";
-    getOrders(path);
+
+    Business myBusiness = Business(getNumFiles(path), getOrders(path));
+
+    myBusiness.printOrders();
 
     return EXIT_SUCCESS;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
