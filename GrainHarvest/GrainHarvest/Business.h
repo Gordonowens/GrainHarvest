@@ -13,7 +13,13 @@ public:
 
     int numberOrder;
     Order orders[10];
-    Order schedule[5];
+   
+    string grainTypes[3] = { "Wheat", "Barley", "Canola" };
+    int grainValue[3] = { 10, 15, 5 };
+    int grainTime[3] = { 25, 30, 8 };
+
+    //schedule represents 24 hours
+    Order schedule[96];
 
     Business(int y, Order* newOrders) {
 
@@ -32,16 +38,32 @@ public:
         for (int i = 0; i < numberOrder; i++) {
 
             orders[i] = newOrders[i];
+            setOrderValueTime(i);
 
         }
+    }
+
+    void setOrderValueTime(int k) {
+
+        for (int i = 0; i < sizeof(grainTypes) / sizeof(grainTypes[0]); i++) {
+
+            if (orders[k].getGrainType() == grainTypes[i]) {
+  
+                orders[k].setOrderTime(grainTime[k] * orders[k].getOrderAmount());
+                orders[k].setOrderValue(grainValue[k] * orders[k].getOrderAmount());
+          
+                break;
+            }
+
+        }
+
     }
 
     void printOrders() {
 
         for (int i = 0; i < numberOrder; i++) {
 
-            cout << "order Number " << to_string(orders[i].getOrderNumber()) << " grain type " << orders[i].getGrainType() <<
-                "order amount " << to_string(orders[i].getOrderAmount()) << "\n";
+            orders[i].printOrder();
         }
     }
 
