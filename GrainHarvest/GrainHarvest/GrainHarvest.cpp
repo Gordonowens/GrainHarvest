@@ -7,6 +7,8 @@
 #include <filesystem>
 #include <string>
 #include <fstream>
+#include "Order.h"
+#include "Business.h"
 
 using std::cout; using std::cin;
 using std::endl; using std::string;
@@ -14,69 +16,29 @@ using std::filesystem::directory_iterator;
 using namespace std;
 
 
-class Order {
-public:
-    string orderName;
 
-    Order(string x = "blank order") {
-        orderName = x;
-    }
 
-    string getName() {
-
-        return orderName;
-    }
-
-};
-
-class Business {
-public:
-
-    int numberOrder;
-    Order orders[10];
-
-    Business(int y, Order* newOrders) {
-        
-        numberOrder = y;
-
-        setOrders(newOrders);   
-    }
-
-    int getNumberOrders(){
-
-        return numberOrder;
-    }
-
-    void setOrders (Order * newOrders) {
-
-        for (int i = 0; i < numberOrder; i++) {
-
-            orders[i] = newOrders[i];
-
-        }
-    }
-
-    void printOrders() {
-
-        for (int i = 0; i < numberOrder; i++) {
-
-            cout << orders[i].getName() << "\n";
-        }
-    }
-};
 
 
 Order * getOrders(string path) {
 
     string myText;
+    int orderNumber;
     int numOrder = 0;
+    int amountOrder;
     static Order orders[10];
 
     for (const auto& file : directory_iterator(path)) {
         ifstream MyReadFile(file.path());
         getline(MyReadFile, myText);
-        
-        orders[numOrder] = Order(myText);
+        orderNumber = stoi(myText);
+
+        getline(MyReadFile, myText);
+        amountOrder = stoi(myText);
+
+        getline(MyReadFile, myText);
+        orders[numOrder].setOrderValues(orderNumber, amountOrder, myText);
+
         numOrder += 1;
     }
     
