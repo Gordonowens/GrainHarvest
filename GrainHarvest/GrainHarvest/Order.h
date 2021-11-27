@@ -7,51 +7,53 @@ using std::cout; using std::cin;
 using std::endl; using std::string;
 using namespace std;
 
-
+//represent a customer order
 class Order {
 public:
-    int orderNumber = 0;
-    string grainType = "no type";
-    int grainAmount = 0;
-    int orderValue = 0;
-    int orderTime = 0;
+ 
+    string grain_type = "no type";
+    int grain_amount = 0;
+    int order_value = 0;
+    int order_time = 0;
+    int order_number = 0;
 
-    void setOrderValues(int x, int y, string z) {
+    
+    void SetOrderData(int x, int y, string z) {
 
-        orderNumber = x;
-        grainAmount = y;
-        grainType = z;
+        order_number = x;
+        grain_amount = y;
+        grain_type = z;
     }
 
-    void setOrderValue(int value) {
+    void SetOrderValue(int value) {
 
-        orderValue = value;
+        order_value = value;
     }
 
-    void setOrderTime(int value) {
+    void SetOrderTime(int value) {
 
-        orderTime = value;
+        order_time = value;
     }
 
-    int getOrderNumber() {
+    int GetOrderNumber() {
 
-        return orderNumber;
+        return order_number;
     }
 
-    int getOrderAmount() {
+    int GetOrderAmount() {
 
-        return grainAmount;
+        return grain_amount;
     }
 
-    string getGrainType() {
+    string GetGrainType() {
 
-        return grainType;
+        return grain_type;
     }
 
-    void printOrder() {
-        cout << "order Number " << to_string(orderNumber) << " grain type " << grainType <<
-            "order amount " << to_string(grainAmount) << "order value " << to_string(orderValue) <<
-            "order time " << to_string(orderTime) << "\n";
+    void PrintOrder() {
+        cout << "order Number " << to_string(order_number) << " grain type " << grain_type <<
+            "order amount " << to_string(grain_amount) << "order value " << to_string(order_value) <<
+            "order time " << to_string(order_time) << "\n";
     }
 
 

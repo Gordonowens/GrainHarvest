@@ -8,87 +8,103 @@ using std::cout; using std::cin;
 using std::endl; using std::string;
 using namespace std;
 
+//Represent the grain silo company
+//runs the logic of the grain business
+//holds data relevant to running of grain business
 class Business {
 public:
 
-    int numberOrder;
+    int number_order;
+    string grain_types[3] = { "Wheat", "Barley", "Canola" };
+    int grain_values[3] = { 60, 100, 120 };
+    int grain_time[3] = { 10, 20, 30 };
     Order orders[10];
-   
-    string grainTypes[3] = { "Wheat", "Barley", "Canola" };
-    int grainValue[3] = { 10, 15, 5 };
-    int grainTime[3] = { 25, 30, 8 };
-
     //schedule represents 24 hours
     Order schedule[96];
 
-    Business(int y, Order* newOrders) {
+    Business(int y, Order* new_orders) {
 
-        numberOrder = y;
+        number_order = y;
 
-        setOrders(newOrders);
+        SetOrders(new_orders);
     }
 
-    int getNumberOrders() {
+    int GetNumberOrders() {
 
-        return numberOrder;
+        return number_order;
     }
 
-    void setOrders(Order* newOrders) {
+    void SetOrders(Order* newOrders) {
+        //input is a list of orders
+        //iterates over the orders and adds then to the businesses list of orders
 
-        for (int i = 0; i < numberOrder; i++) {
+        for (int i = 0; i < number_order; i++) {
 
             orders[i] = newOrders[i];
-            setOrderValueTime(i);
+            SetOrderValueTime(i);
 
         }
     }
 
-    void setOrderValueTime(int k) {
+    void SetOrderValueTime(int k) {
+        //inputs: takes the index number of the orders array for order that needs
+        // to calculate value and time
 
-        for (int i = 0; i < sizeof(grainTypes) / sizeof(grainTypes[0]); i++) {
+        //iterate over graint types
+        for (int i = 0; i < sizeof(grain_types) / sizeof(grain_types[0]); i++) {
 
-            if (orders[k].getGrainType() == grainTypes[i]) {
-  
-                orders[k].setOrderTime(grainTime[k] * orders[k].getOrderAmount());
-                orders[k].setOrderValue(grainValue[k] * orders[k].getOrderAmount());
-          
+            //check if order has same grain type
+            if (orders[k].GetGrainType() == grain_types[i]) {
+
+                //update order value and time data
+                orders[k].SetOrderTime(grain_time[k] * orders[k].GetOrderAmount());
+                orders[k].SetOrderValue(grain_values[k] * orders[k].GetOrderAmount());
+
                 break;
             }
-
-        }
-
-    }
-
-    void printOrders() {
-
-        for (int i = 0; i < numberOrder; i++) {
-
-            orders[i].printOrder();
         }
     }
 
-    void updateSchedule() {
+    void PrintOrders() {
+
+        for (int i = 0; i < number_order; i++) {
+
+            orders[i].PrintOrder();
+        }
+    }
+
+    void UpdateSchedule() {
 
     }
 
-    bool checkSchedule() {
+    bool CheckSchedule() {
         return true;
     }
 
-    int returnScheduleValue() {
+    int ReturnScheduleValue() {
 
         return 5;
     }
 
-    void createOptimumSchedule() {
+    int* ReturnGrainValues() {
+
+        return grain_values;
+    }
+    
+   
+    int* ReturnGrainTime() {
+        return grain_time;
+    }
+
+    void CreateOptimumSchedule() {
 
     }
 
-    void createRandomSchedule() {
+    void CreateRandomSchedule() {
 
     }
 
-    void printSchedule() {
+    void PrintSchedule() {
 
     }
 };

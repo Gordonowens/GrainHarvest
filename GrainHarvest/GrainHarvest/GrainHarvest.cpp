@@ -16,54 +16,53 @@ using std::filesystem::directory_iterator;
 using namespace std;
 
 
+Order * GetOrders(string path) {
 
-
-
-
-Order * getOrders(string path) {
-
-    string myText;
-    int orderNumber;
-    int numOrder = 0;
-    int amountOrder;
+    string temp_text;
+    int order_numbers;
+    int num_order = 0;
+    int amount_order;
     static Order orders[10];
 
     for (const auto& file : directory_iterator(path)) {
+
         ifstream MyReadFile(file.path());
-        getline(MyReadFile, myText);
-        orderNumber = stoi(myText);
+        getline(MyReadFile, temp_text);
+        order_numbers = stoi(temp_text);
 
-        getline(MyReadFile, myText);
-        amountOrder = stoi(myText);
+        getline(MyReadFile, temp_text);
+        amount_order = stoi(temp_text);
 
-        getline(MyReadFile, myText);
-        orders[numOrder].setOrderValues(orderNumber, amountOrder, myText);
+        getline(MyReadFile, temp_text);
+        orders[num_order].SetOrderData(order_numbers, amount_order, temp_text);
 
-        numOrder += 1;
+        num_order += 1;
     }
     
     return orders; 
 }
 
-int getNumFiles(string path) {
+int GetNumFiles(string path) {
 
-    int numOrder = 0;
+    int num_order = 0;
 
     for (const auto& file : directory_iterator(path)) {
       
-        numOrder += 1;
+        num_order += 1;
     }
 
-    return numOrder;
+    return num_order;
 }
 
 int main()
 {
+    //enter path to folder containing orders
     string path = "orders/";
 
-    Business myBusiness = Business(getNumFiles(path), getOrders(path));
+    //set up new busniess
+    Business my_business = Business(GetNumFiles(path), GetOrders(path));
 
-    myBusiness.printOrders();
+    my_business.PrintOrders();
 
     return EXIT_SUCCESS;
 }
