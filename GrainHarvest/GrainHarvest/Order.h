@@ -45,6 +45,16 @@ public:
         return grain_amount;
     }
 
+    int GetOrderTime() {
+
+        return order_time;
+    }
+
+    int GetOrderValue() {
+
+        return order_value;
+    }
+
     string GetGrainType() {
 
         return grain_type;

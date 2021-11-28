@@ -1,5 +1,8 @@
 ﻿  Business.cpp
+C:\Users\User\Documents\Grain Harvest Program\GrainHarvest\GrainHarvest\Business.h(62,45): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\User\Documents\Grain Harvest Program\GrainHarvest\GrainHarvest\Business.h(63,46): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   GrainHarvest.cpp
-  Order.cpp
+C:\Users\User\Documents\Grain Harvest Program\GrainHarvest\GrainHarvest\Business.h(62,45): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\User\Documents\Grain Harvest Program\GrainHarvest\GrainHarvest\Business.h(63,46): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   Generating Code...
   GrainHarvest.vcxproj -> C:\Users\User\Documents\Grain Harvest Program\GrainHarvest\x64\Debug\GrainHarvest.exe

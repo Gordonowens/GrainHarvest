@@ -15,6 +15,51 @@ using std::endl; using std::string;
 using std::filesystem::directory_iterator;
 using namespace std;
 
+void knapsackDyProg(int* W, int* V, int M, int n) {
+
+
+    int** B = new int* [n + 1];
+
+    for (int i = 0; i < (n + 1); i++) {
+        B[i] = new int[M + 1];
+    }
+
+
+
+	for (int i = 0; i <= n; i++)
+		for (int j = 0; j <= M; j++) {
+
+			B[i][j] = 0;
+		}
+
+
+	for (int i = 1; i <= n; i++) {
+		for (int j = 0; j <= M; j++) {
+			B[i][j] = B[i - 1][j];
+
+			if ((j >= W[i - 1]) && (B[i][j] < B[i - 1][j - W[i - 1]] + V[i - 1])) {
+				B[i][j] = B[i - 1][j - W[i - 1]] + V[i - 1];
+			}
+             
+			cout << to_string(B[i][j]) << " ";
+		}
+		cout << "\n";
+	}
+
+	cout << "Max Value:\t" <<  to_string(B[n][M]);
+
+	cout << "Selected Packs: ";
+
+	while (n != 0) {
+		if (B[n][M] != B[n - 1][M]) {
+			cout << "\tPackage " <<  to_string(n) <<  " with W = " + to_string(W[n - 1]) << " and Value = " + to_string(V[n - 1]);
+
+			M = M - W[n - 1];
+		}
+
+		n--;
+	}
+}
 
 Order * GetOrders(string path) {
 
@@ -62,7 +107,12 @@ int main()
     //set up new busniess
     Business my_business = Business(GetNumFiles(path), GetOrders(path));
 
-    my_business.PrintOrders();
+    cout << to_string(GetNumFiles(path));
+    
+
+    //my_business.PrintOrders();
+
+	my_business.GetBestSelection();
 
     return EXIT_SUCCESS;
 }
