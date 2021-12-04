@@ -15,72 +15,37 @@ using std::endl; using std::string;
 using std::filesystem::directory_iterator;
 using namespace std;
 
-void knapsackDyProg(int* W, int* V, int M, int n) {
-
-
-    int** B = new int* [n + 1];
-
-    for (int i = 0; i < (n + 1); i++) {
-        B[i] = new int[M + 1];
-    }
-
-
-
-	for (int i = 0; i <= n; i++)
-		for (int j = 0; j <= M; j++) {
-
-			B[i][j] = 0;
-		}
-
-
-	for (int i = 1; i <= n; i++) {
-		for (int j = 0; j <= M; j++) {
-			B[i][j] = B[i - 1][j];
-
-			if ((j >= W[i - 1]) && (B[i][j] < B[i - 1][j - W[i - 1]] + V[i - 1])) {
-				B[i][j] = B[i - 1][j - W[i - 1]] + V[i - 1];
-			}
-             
-			cout << to_string(B[i][j]) << " ";
-		}
-		cout << "\n";
-	}
-
-	cout << "Max Value:\t" <<  to_string(B[n][M]);
-
-	cout << "Selected Packs: ";
-
-	while (n != 0) {
-		if (B[n][M] != B[n - 1][M]) {
-			cout << "\tPackage " <<  to_string(n) <<  " with W = " + to_string(W[n - 1]) << " and Value = " + to_string(V[n - 1]);
-
-			M = M - W[n - 1];
-		}
-
-		n--;
-	}
-}
-
-Order * GetOrders(string path) {
+Order * GetOrders(string path, int number_files) {
 
     string temp_text;
     int order_numbers;
     int num_order = 0;
     int amount_order;
-    static Order orders[10];
+    string grain_type_order;
+    static Order *orders;
+
+    orders = new Order[number_files];
 
     for (const auto& file : directory_iterator(path)) {
 
         ifstream MyReadFile(file.path());
+        
+        //get order number
         getline(MyReadFile, temp_text);
         order_numbers = stoi(temp_text);
 
+        //get order amount
         getline(MyReadFile, temp_text);
         amount_order = stoi(temp_text);
 
+        //get order grain type 
         getline(MyReadFile, temp_text);
-        orders[num_order].SetOrderData(order_numbers, amount_order, temp_text);
+        grain_type_order = temp_text;
 
+        //update order data
+        orders[num_order].SetOrderData(order_numbers, amount_order, grain_type_order);
+
+        //next order
         num_order += 1;
     }
     
@@ -104,8 +69,9 @@ int main()
     //enter path to folder containing orders
     string path = "orders/";
 
+    int number_files = GetNumFiles(path);
     //set up new busniess
-    Business my_business = Business(GetNumFiles(path), GetOrders(path));
+    Business my_business = Business(number_files, GetOrders(path, number_files), number_files);
 
     cout << to_string(GetNumFiles(path));
     

@@ -15,20 +15,24 @@ class Business {
 public:
 
     int number_order;
-    string grain_types[3] = { "A", "B", "C" };
     int grain_values[3] = { 150, 100, 50 };
-    double grain_time[3] = { .25, .30, .17};
     int max_time = 150;
-    Order orders[10];
-    //schedule represents 24 hours
-    Order schedule[96];
-   
+    double grain_time[3] = { .25, .30, .17 };
 
-    Business(int y, Order* new_orders) {
+    string grain_types[3] = { "A", "B", "C" };
+    Order *orders;
+
+    Business(int y, Order* new_orders, int number_orders) {
 
         number_order = y;
 
-        SetOrders(new_orders);
+        orders = new Order[number_orders];
+
+        for (int i = 0; i < number_order; i++) {
+
+            orders[i] = new_orders[i];
+            SetOrderValueTime(i);
+        }
     }
 
     int GetNumberOrders() {
@@ -40,12 +44,7 @@ public:
         //input is a list of orders
         //iterates over the orders and adds then to the businesses list of orders
 
-        for (int i = 0; i < number_order; i++) {
-
-            orders[i] = newOrders[i];
-            SetOrderValueTime(i);
-
-        }
+        
     }
 
     void SetOrderValueTime(int k) {
@@ -61,7 +60,6 @@ public:
                 //update order value and time data
                 orders[k].SetOrderTime(round(grain_time[k] * orders[k].GetOrderAmount()));
                 orders[k].SetOrderValue(round(grain_values[k] * orders[k].GetOrderAmount()));
-
                 break;
             }
         }
@@ -74,8 +72,6 @@ public:
 
         int* times = new int[number_order];
         int* values = new int[number_order];
-
-
 
         for (int i = 0; i < number_order; i++) {
             times[i] = orders[i].GetOrderTime();
@@ -134,21 +130,17 @@ public:
 
     void knapsackDyProg(int* W, int* V, int M, int n) {
 
-
         int** B = new int* [n + 1];
 
         for (int i = 0; i < (n + 1); i++) {
             B[i] = new int[M + 1];
         }
 
-
-
         for (int i = 0; i <= n; i++)
             for (int j = 0; j <= M; j++) {
 
                 B[i][j] = 0;
             }
-
 
         for (int i = 1; i <= n; i++) {
             for (int j = 0; j <= M; j++) {

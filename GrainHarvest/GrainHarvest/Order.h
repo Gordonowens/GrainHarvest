@@ -11,12 +11,12 @@ using namespace std;
 class Order {
 public:
  
-    string grain_type = "no type";
     int grain_amount = 0;
     int order_value = 0;
     int order_time = 0;
     int order_number = 0;
 
+    string grain_type = "no type";
     
     void SetOrderData(int x, int y, string z) {
 
@@ -65,7 +65,5 @@ public:
             "order amount " << to_string(grain_amount) << "order value " << to_string(order_value) <<
             "order time " << to_string(order_time) << "\n";
     }
-
-
 };
 
