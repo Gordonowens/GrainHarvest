@@ -21,6 +21,7 @@ Order * GetOrders(string path, int number_files) {
     int order_numbers;
     int num_order = 0;
     int amount_order;
+    int grain_weight;
     string grain_type_order;
     static Order *orders;
 
@@ -42,8 +43,13 @@ Order * GetOrders(string path, int number_files) {
         getline(MyReadFile, temp_text);
         grain_type_order = temp_text;
 
+        //get order weight
+        getline(MyReadFile, temp_text);
+        grain_weight = stoi(temp_text);
+
+
         //update order data
-        orders[num_order].SetOrderData(order_numbers, amount_order, grain_type_order);
+        orders[num_order].SetOrderData(order_numbers, amount_order,  grain_weight, grain_type_order);
 
         //next order
         num_order += 1;

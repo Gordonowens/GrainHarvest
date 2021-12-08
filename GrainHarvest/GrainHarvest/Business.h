@@ -21,7 +21,7 @@ public:
 
     int number_order;
     int grain_values[3] = { 150, 100, 50 };
-    int max_time = 150;
+    int max_time = 50;
     double grain_time[3] = { .25, .30, .17 };
 
     string grain_types[3] = { "A", "B", "C" };
@@ -59,17 +59,25 @@ public:
         // to calculate value and time
 
         //iterate over graint types
+        
         for (int i = 0; i < sizeof(grain_types) / sizeof(grain_types[0]); i++) {
+
+
+            
 
             //check if order has same grain type
             if (orders[k].GetGrainType() == grain_types[i]) {
 
                 //update order value and time data
-                orders[k].SetOrderTime(round(grain_time[k] * orders[k].GetOrderAmount()));
-                orders[k].SetOrderValue(round(grain_values[k] * orders[k].GetOrderAmount()));
+                //orders[k].SetOrderTime(round(grain_time[k] * orders[k].GetOrderAmount()));
+                orders[k].SetOrderTime(orders[k].GetOrderWeight());
+                orders[k].SetOrderValue(orders[k].GetOrderAmount());
+                //orders[k].SetOrderValue(round(grain_values[k] * orders[k].GetOrderAmount()));
                 break;
             }
+            
         }
+        
     }
 
     void GetBestSelection() {
@@ -93,10 +101,11 @@ public:
 
         //pass order values and times to knapsac algorithm
         schedule_solution = knapsackDyProg(times, values, max_time, number_order);
+        cout << "\n";
 
         for (int i = 0; i < schedule_solution.number_elements; i++) {
 
-            cout << " " + to_string(schedule_solution.solution[i]);
+            cout << " " + to_string(orders[schedule_solution.solution[i] - 1].GetOrderNumber());
         }
         
     }
@@ -198,10 +207,12 @@ public:
                 if (selection_array[0] != 0) {
                     selection_array = resize(selection_array, selection_number);
                     selection_array[selection_number] = n;
+
                     selection_number++;
                 }
                 else {
                     selection_array[selection_number - 1] = n;
+                    
                     
                 }
                 M = M - W[n - 1];
@@ -212,6 +223,7 @@ public:
 
         schedule.number_elements = selection_number;
         schedule.solution = selection_array;
+
         return schedule;
     }
 };

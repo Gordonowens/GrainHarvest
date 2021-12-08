@@ -15,13 +15,15 @@ public:
     int order_value = 0;
     int order_time = 0;
     int order_number = 0;
+    int grain_weight = 0;
 
     string grain_type = "no type";
     
-    void SetOrderData(int x, int y, string z) {
+    void SetOrderData(int x, int y,  int p, string z) {
 
         order_number = x;
-        grain_amount = y;
+        grain_amount = y; 
+        grain_weight = p;
         grain_type = z;
     }
 
@@ -43,6 +45,11 @@ public:
     int GetOrderAmount() {
 
         return grain_amount;
+    }
+
+    int GetOrderWeight() {
+
+        return grain_weight;
     }
 
     int GetOrderTime() {
