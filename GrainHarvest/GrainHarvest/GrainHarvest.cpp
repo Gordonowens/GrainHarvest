@@ -39,17 +39,13 @@ Order * GetOrders(string path, int number_files) {
         getline(MyReadFile, temp_text);
         amount_order = stoi(temp_text);
 
-        //get order grain type 
-        getline(MyReadFile, temp_text);
-        grain_type_order = temp_text;
-
         //get order weight
         getline(MyReadFile, temp_text);
         grain_weight = stoi(temp_text);
 
 
         //update order data
-        orders[num_order].SetOrderData(order_numbers, amount_order,  grain_weight, grain_type_order);
+        orders[num_order].SetOrderData(order_numbers, amount_order,  grain_weight);
 
         //next order
         num_order += 1;
@@ -77,11 +73,10 @@ int main()
 
     int number_files = GetNumFiles(path);
     //set up new busniess
-    Business my_business = Business(number_files, GetOrders(path, number_files), number_files);
+    Business my_business = Business(number_files, GetOrders(path, number_files), number_files, "orders/output/outputfile.txt");
 
     cout << to_string(GetNumFiles(path));
     
-
     //my_business.PrintOrders();
 
 	my_business.GetBestSelection();

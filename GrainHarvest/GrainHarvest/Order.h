@@ -9,32 +9,19 @@ using namespace std;
 
 //represent a customer order
 class Order {
-public:
+private:
  
-    int grain_amount = 0;
-    int order_value = 0;
-    int order_time = 0;
+    int grain_value = 0;
     int order_number = 0;
     int grain_weight = 0;
+   
+public:
 
-    string grain_type = "no type";
-    
-    void SetOrderData(int x, int y,  int p, string z) {
+    void SetOrderData(int x, int y,  int p) {
 
         order_number = x;
-        grain_amount = y; 
+        grain_value = y; 
         grain_weight = p;
-        grain_type = z;
-    }
-
-    void SetOrderValue(int value) {
-
-        order_value = value;
-    }
-
-    void SetOrderTime(int value) {
-
-        order_time = value;
     }
 
     int GetOrderNumber() {
@@ -42,9 +29,9 @@ public:
         return order_number;
     }
 
-    int GetOrderAmount() {
+    int GetOrderValue() {
 
-        return grain_amount;
+        return grain_value;
     }
 
     int GetOrderWeight() {
@@ -52,25 +39,9 @@ public:
         return grain_weight;
     }
 
-    int GetOrderTime() {
-
-        return order_time;
-    }
-
-    int GetOrderValue() {
-
-        return order_value;
-    }
-
-    string GetGrainType() {
-
-        return grain_type;
-    }
-
     void PrintOrder() {
-        cout << "order Number " << to_string(order_number) << " grain type " << grain_type <<
-            "order amount " << to_string(grain_amount) << "order value " << to_string(order_value) <<
-            "order time " << to_string(order_time) << "\n";
+        cout << "order Number " << to_string(order_number) << " grain type "
+            "order value " << to_string(grain_value);
     }
 };
 
